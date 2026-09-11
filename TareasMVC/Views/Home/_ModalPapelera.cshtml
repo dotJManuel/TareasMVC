@@ -1,0 +1,36 @@
+﻿<div class="modal fade" id="modal-papelera" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-trash3"></i> Papelera</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="lista-subtareas" data-bind="foreach: tareas">
+                    <div class="subtarea-item">
+                        <span class="fw-semibold" data-bind="text: titulo"></span>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-secondary btn-sm" data-bind="click: restaurarTarea">
+                                <i class="bi bi-arrow-counterclockwise"></i> Restaurar
+                            </button>
+                            <button class="btn btn-danger btn-sm" data-bind="click: manejarClickEliminarPermanente">
+                                <i class="bi bi-x-lg"></i> Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-bind="visible: cargando" class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+
+                <div data-bind="visible: noHayTareas" class="tareas-vacio">
+                    <i class="bi bi-trash3"></i>
+                    La papelera está vacía
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

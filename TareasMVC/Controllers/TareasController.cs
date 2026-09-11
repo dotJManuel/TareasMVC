@@ -190,5 +190,64 @@ namespace TareasMVC.Controllers
             await context.SaveChangesAsync();
             return subtarea;
         }
+
+        [HttpGet("papelera")]
+        public async Task<ActionResult<List<TareaDTO>>> GetPapelera()
+        {
+            var usuarioId = servicioUsuarios.ObtenerUsuarioId();
+
+            var tareas = await context.Tareas
+                .IgnoreQueryFilters()
+                .Where(t => t.UsuarioCreacionId == usuarioId && t.FechaEliminacion != null)
+                .OrderByDescending(t => t.FechaEliminacion)
+                .ProjectTo<TareaDTO>(mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return tareas;
+        }
+
+        [HttpPost("{id:int}/restaurar")]
+        public async Task<ActionResult> Restaurar(int id)
+        {
+            var usuarioId = servicioUsuarios.ObtenerUsuarioId();
+
+            var tarea = await context.Tareas
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(t => t.Id == id && t.UsuarioCreacionId == usuarioId);
+
+            if (tarea is null)
+            {
+                return NotFound();
+            }
+
+            tarea.FechaEliminacion = null;
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete("{id:int}/permanente")]
+        public async Task<ActionResult> DeletePermanente(int id)
+        {
+            var usuarioId = servicioUsuarios.ObtenerUsuarioId();
+
+            var tarea = await context.Tareas
+                .IgnoreQueryFilters()
+                .Include(t => t.Subtareas)
+                .FirstOrDefaultAsync(t => t.Id == id && t.UsuarioCreacionId == usuarioId);
+
+            if (tarea is null)
+            {
+                return NotFound();
+            }
+
+            foreach (var subtarea in tarea.Subtareas)
+            {
+                subtarea.TareaPadreId = null;
+            }
+
+            context.Remove(tarea);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }
