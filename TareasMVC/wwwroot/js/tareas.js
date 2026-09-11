@@ -110,6 +110,7 @@ async function abrirTareaPorId(id) {
     tareaEditarVM.id = json.id;
     tareaEditarVM.titulo(json.titulo);
     tareaEditarVM.descripcion(json.descripcion);
+    tareaEditarVM.tareaPadreId(json.tareaPadreId);
 
     tareaEditarVM.pasos([]);
     tareaEditarVM.archivosAdjuntos([]);

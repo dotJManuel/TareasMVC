@@ -5,6 +5,7 @@
 }
 
 function manejarClickAgregarSubtarea() {
+    modalEditarTareaBootstrap.hide();
     Swal.fire({
         title: 'Nueva subtarea',
         input: 'text',
@@ -12,6 +13,7 @@ function manejarClickAgregarSubtarea() {
         showCancelButton: true,
         confirmButtonText: 'Agregar'
     }).then(async (resultado) => {
+        modalEditarTareaBootstrap.show();
         if (!resultado.isConfirmed || !resultado.value) {
             return;
         }
@@ -31,6 +33,11 @@ async function insertarSubtarea(titulo) {
     if (respuesta.ok) {
         const json = await respuesta.json();
         tareaEditarVM.subtareas.push(new subtareaViewModel(json));
+
+        const tarea = obtenerTareaEnEdicion();
+        if (tarea) {
+            tarea.subtareasTotal(tarea.subtareasTotal() + 1);
+        }
     } else {
         manejarErrorApi(respuesta);
     }
@@ -38,6 +45,10 @@ async function insertarSubtarea(titulo) {
 
 function manejarClickAbrirSubtarea(subtarea) {
     abrirTareaPorId(subtarea.id());
+}
+
+function manejarClickVolverAlPadre() {
+    abrirTareaPorId(tareaEditarVM.tareaPadreId());
 }
 
 function manejarClickBorrarSubtarea(subtarea) {
@@ -61,6 +72,11 @@ async function borrarSubtarea(subtarea) {
 
     if (respuesta.ok) {
         tareaEditarVM.subtareas.remove(function (item) { return item.id() == subtarea.id(); });
+
+        const tarea = obtenerTareaEnEdicion();
+        if (tarea) {
+            tarea.subtareasTotal(tarea.subtareasTotal() - 1);
+        }
     } else {
         manejarErrorApi(respuesta);
     }

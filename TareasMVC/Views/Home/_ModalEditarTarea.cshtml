@@ -6,6 +6,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
+                <button type="button" class="btn btn-secondary btn-sm mb-3"
+                        data-bind="visible: tareaPadreId"
+                        onclick="manejarClickVolverAlPadre()">
+                    <i class="bi bi-arrow-90deg-up"></i> Volver a la tarea principal
+                </button>
                 <div class="row">
                     <div class="col-lg-9">
                         <div class="form-floating mb-3">

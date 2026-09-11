@@ -58,10 +58,12 @@ async function insertarPaso(paso, data, idTarea) {
 
         const tarea = obtenerTareaEnEdicion();
 
-        tarea.pasosTotal(tarea.pasosTotal() + 1);
+        if (tarea) {
+            tarea.pasosTotal(tarea.pasosTotal() + 1);
 
-        if (paso.realizado()) {
-            tarea.pasosRealizados(tarea.pasosRealizados() + 1);
+            if (paso.realizado()) {
+                tarea.pasosRealizados(tarea.pasosRealizados() + 1);
+            }
         }
 
     } else {
@@ -107,15 +109,17 @@ function manejarClickCheckboxPaso(paso) {
 
     const tarea = obtenerTareaEnEdicion();
 
-    let pasosRealizadosActual = tarea.pasosRealizados();
+    if (tarea) {
+        let pasosRealizadosActual = tarea.pasosRealizados();
 
-    if (paso.realizado()) {
-        pasosRealizadosActual++;
-    } else {
-        pasosRealizadosActual--;
+        if (paso.realizado()) {
+            pasosRealizadosActual++;
+        } else {
+            pasosRealizadosActual--;
+        }
+
+        tarea.pasosRealizados(pasosRealizadosActual);
     }
-
-    tarea.pasosRealizados(pasosRealizadosActual);
 
     return true;
 }
@@ -147,10 +151,13 @@ async function borrarPaso(paso) {
     tareaEditarVM.pasos.remove(function (item) { return item.id() == paso.id() });
 
     const tarea = obtenerTareaEnEdicion();
-    tarea.pasosTotal(tarea.pasosTotal() - 1);
 
-    if (paso.realizado()) {
-        tarea.pasosRealizados(tarea.pasosRealizados() - 1);
+    if (tarea) {
+        tarea.pasosTotal(tarea.pasosTotal() - 1);
+
+        if (paso.realizado()) {
+            tarea.pasosRealizados(tarea.pasosRealizados() - 1);
+        }
     }
 }
 
