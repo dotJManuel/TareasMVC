@@ -3,7 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TareasMVC</title>
+    <title>@ViewData["Title"] - Taskly</title>
+    <script>
+        (function () {
+            try {
+                var tema = localStorage.getItem('tema');
+                if (!tema) {
+                    tema = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-bs-theme', tema);
+            } catch (e) { }
+        })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
@@ -16,7 +27,7 @@
     <div class="auth-split">
         <div class="auth-split-brand">
             <div>
-                <h1>Tareas MVC</h1>
+                <h1>Taskly</h1>
                 <h4>En esta aplicación podrás manejar tus tareas</h4>
             </div>
         </div>

@@ -22,6 +22,37 @@
     --ease: cubic-bezier(.4, 0, .2, 1);
 }
 
+[data-bs-theme="dark"] {
+    --brand: #8ea2c4;
+    --brand-strong: #aab9d6;
+    --brand-soft: #232b38;
+    --brand-rgb: 142, 162, 196;
+    --bg: #0e131a;
+    --surface: #161d27;
+    --surface-2: #1c2530;
+    --ink: #e6eaf1;
+    --muted: #94a1b5;
+    --border: #29323f;
+    --success: #22c55e;
+    --success-soft: #12301e;
+    --danger: #fb7185;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4);
+    --shadow: 0 4px 16px rgba(0, 0, 0, .45);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, .55);
+}
+
+[data-bs-theme="dark"] .navbar {
+    background-color: rgba(22, 29, 39, .8);
+}
+
+[data-bs-theme="dark"] .footer {
+    background-color: rgba(22, 29, 39, .7);
+}
+
+[data-bs-theme="dark"] .alert-success {
+    color: #86efac;
+}
+
 html {
     font-size: 15px;
     position: relative;
@@ -58,7 +89,7 @@ body {
 .navbar-brand {
     font-weight: 700;
     letter-spacing: -0.02em;
-    color: var(--ink);
+    color: var(--ink) !important;
     display: inline-flex;
     align-items: center;
     gap: .5rem;
@@ -84,6 +115,36 @@ body {
 .navbar .nav-link:hover {
     color: var(--ink) !important;
     background-color: var(--brand-soft);
+}
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    color: var(--muted);
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: color .15s var(--ease), background-color .15s var(--ease), border-color .15s var(--ease), transform .15s var(--ease);
+}
+
+.theme-toggle:hover {
+    color: var(--ink);
+    border-color: var(--brand);
+    background-color: var(--brand-soft);
+}
+
+.theme-toggle:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+}
+
+.theme-toggle:active {
+    transform: scale(.94);
 }
 
 .btn {
@@ -133,8 +194,24 @@ body {
 .form-control, .form-select {
     border-radius: var(--r-sm);
     border-color: var(--border);
+    background-color: var(--surface);
+    color: var(--ink);
     padding: .6rem .85rem;
     transition: border-color .15s var(--ease), box-shadow .15s var(--ease);
+}
+
+.form-control::placeholder {
+    color: var(--muted);
+    opacity: 1;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--surface);
+    color: var(--ink);
+}
+
+.form-floating > label {
+    color: var(--muted);
 }
 
 .form-control:focus, .form-select:focus {
@@ -150,6 +227,8 @@ body {
     border: none;
     border-radius: var(--r-lg);
     box-shadow: var(--shadow-lg);
+    background-color: var(--surface);
+    color: var(--ink);
 }
 
 .modal-header {
