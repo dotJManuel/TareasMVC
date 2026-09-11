@@ -89,8 +89,11 @@ async function manejarClickTarea(tarea) {
     if (tarea.esNuevo()) {
         return;
     }
+    await abrirTareaPorId(tarea.id());
+}
 
-    const respuesta = await fetch(`${urlTareas}/${tarea.id()}`, {
+async function abrirTareaPorId(id) {
+    const respuesta = await fetch(`${urlTareas}/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -110,17 +113,23 @@ async function manejarClickTarea(tarea) {
 
     tareaEditarVM.pasos([]);
     tareaEditarVM.archivosAdjuntos([]);
+    tareaEditarVM.subtareas([]);
 
     json.pasos.forEach(paso => {
         tareaEditarVM.pasos.push(
             new pasoViewModel({ ...paso, modoEdicion: false })
-        )
-    })
+        );
+    });
+
+    if (json.subtareas) {
+        json.subtareas.forEach(sub => {
+            tareaEditarVM.subtareas.push(new subtareaViewModel(sub));
+        });
+    }
 
     prepararArchivosAdjuntos(json.archivosAdjuntos);
 
     modalEditarTareaBootstrap.show();
-
 }
 
 async function manejarCambioEditarTarea() {

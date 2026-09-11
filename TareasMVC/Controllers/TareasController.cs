@@ -154,5 +154,41 @@ namespace TareasMVC.Controllers
 
             return Ok();
         }
+
+        [HttpPost("{tareaPadreId:int}/subtareas")]
+        public async Task<ActionResult<Tarea>> PostSubtarea(int tareaPadreId, [FromBody] string titulo)
+        {
+            var usuarioId = servicioUsuarios.ObtenerUsuarioId();
+
+            var tareaPadre = await context.Tareas.FirstOrDefaultAsync(t => t.Id == tareaPadreId &&
+                t.UsuarioCreacionId == usuarioId);
+
+            if (tareaPadre is null)
+            {
+                return NotFound();
+            }
+
+            var existenSubtareas = await context.Tareas.AnyAsync(t => t.TareaPadreId == tareaPadreId);
+
+            var ordenMayor = 0;
+            if (existenSubtareas)
+            {
+                ordenMayor = await context.Tareas.Where(t => t.TareaPadreId == tareaPadreId)
+                    .Select(t => t.Orden).MaxAsync();
+            }
+
+            var subtarea = new Tarea
+            {
+                Titulo = titulo,
+                UsuarioCreacionId = usuarioId,
+                FechaCreacion = DateTime.UtcNow,
+                Orden = ordenMayor + 1,
+                TareaPadreId = tareaPadreId
+            };
+
+            context.Add(subtarea);
+            await context.SaveChangesAsync();
+            return subtarea;
+        }
     }
 }

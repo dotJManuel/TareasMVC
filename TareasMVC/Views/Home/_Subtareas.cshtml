@@ -1,0 +1,15 @@
+﻿<div class="editor-seccion-head">
+    <label class="editor-label"><i class="bi bi-diagram-3"></i> Subtareas</label>
+    <button class="btn btn-secondary btn-sm" onclick="manejarClickAgregarSubtarea()">
+        <i class="bi bi-plus-lg"></i>
+    </button>
+</div>
+
+<div class="lista-subtareas" data-bind="foreach: subtareas">
+    <div class="subtarea-item">
+        <span style="cursor: pointer" class="fw-semibold"
+              data-bind="text: titulo, click: manejarClickAbrirSubtarea"></span>
+        <span class="accion" style="cursor: pointer"
+              data-bind="click: manejarClickBorrarSubtarea"><i class="bi bi-trash3"></i></span>
+    </div>
+</div>
