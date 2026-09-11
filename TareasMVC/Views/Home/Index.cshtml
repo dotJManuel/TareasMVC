@@ -14,6 +14,10 @@
         <i class="bi bi-plus-lg"></i>
         @localizer["Agregar nueva tarea"]
     </button>
+    <button type="button" class="btn btn-secondary" onclick="abrirPapelera()">
+        <i class="bi bi-trash3"></i>
+        @localizer["Papelera"]
+    </button>
 </div>
 
 <div id="contenedor-listado-tareas">
@@ -56,6 +60,7 @@
 </div>
 
 <partial name="_ModalEditarTarea" />
+<partial name="_ModalPapelera" />
 
 @section Scripts{
 
@@ -63,6 +68,8 @@
     <script src="~/js/tareas.js" asp-append-version="true"></script>
     <script src="~/js/pasos.js" asp-append-version="true"></script>
     <script src="~/js/archivos-adjuntos.js" asp-append-version="true"></script>
+    <script src="~/js/subtareas.js" asp-append-version="true"></script>
+    <script src="~/js/papelera.js" asp-append-version="true"></script>
 
     <script>
 
@@ -72,6 +79,9 @@
 
         const modalEditarTarea = document.getElementById('modal-editar-tarea');
         const modalEditarTareaBootstrap = new bootstrap.Modal(modalEditarTarea);
+
+        const modalPapelera = document.getElementById('modal-papelera');
+        const modalPapeleraBootstrap = new bootstrap.Modal(modalPapelera);
 
         function tareaListadoViewModelFn() {
             var self = this;
@@ -111,7 +121,8 @@
             titulo: ko.observable(''),
             descripcion: ko.observable(''),
             pasos: ko.observableArray([]),
-            archivosAdjuntos: ko.observableArray([])
+            archivosAdjuntos: ko.observableArray([]),
+            subtareas: ko.observableArray([])
         }
 
         const tareaListadoViewModel = new tareaListadoViewModelFn();
@@ -143,5 +154,6 @@
 
         ko.applyBindings(tareaListadoViewModel, document.getElementById('contenedor-listado-tareas'));
         ko.applyBindings(tareaEditarVM, document.getElementById('modal-editar-tarea'));
+        ko.applyBindings(papeleraVM, document.getElementById('modal-papelera'));
     </script>
 }

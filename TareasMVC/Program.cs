@@ -21,11 +21,7 @@ builder.Services.AddControllersWithViews(opciones =>
 {
     opciones.Filters.Add(new AuthorizeFilter(politicaUsuariosAutenticados));
 }).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-.AddDataAnnotationsLocalization(opciones =>
-{
-    opciones.DataAnnotationLocalizerProvider = (_, factoria) =>
-        factoria.Create(typeof(RecursoCompartido));
-}).AddJsonOptions(opciones =>
+.AddJsonOptions(opciones =>
 {
     opciones.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });

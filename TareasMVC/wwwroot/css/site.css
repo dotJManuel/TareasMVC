@@ -596,3 +596,26 @@ body {
         display: none;
     }
 }
+
+.lista-subtareas {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.subtarea-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    padding: .6rem .85rem;
+    transition: border-color .15s var(--ease), background-color .15s var(--ease);
+}
+
+    .subtarea-item:hover {
+        border-color: rgba(var(--brand-rgb), .5);
+        background-color: var(--surface);
+    }
