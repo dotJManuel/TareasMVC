@@ -29,7 +29,7 @@ namespace TareasMVC.Controllers
         {
             var usuarioId = servicioUsuarios.ObtenerUsuarioId();
             var tareas = await context.Tareas
-                .Where(t => t.UsuarioCreacionId == usuarioId)
+                .Where(t => t.UsuarioCreacionId == usuarioId && t.TareaPadreId == null)
                 .OrderBy(t => t.Orden)
                 .ProjectTo<TareaDTO>(mapper.ConfigurationProvider)
                 .ToListAsync();
@@ -45,8 +45,8 @@ namespace TareasMVC.Controllers
             var tarea = await context.Tareas
                 .Include(t => t.Pasos.OrderBy(p => p.Orden))
                 .Include(t => t.ArchivosAdjuntos.OrderBy(a => a.Orden))
-                .FirstOrDefaultAsync(t => t.Id == id &&
-            t.UsuarioCreacionId == usuarioId);
+                .Include(t => t.Subtareas.OrderBy(s => s.Orden))
+                .FirstOrDefaultAsync(t => t.Id == id && t.UsuarioCreacionId == usuarioId);
 
             if (tarea is null)
             {
@@ -54,7 +54,6 @@ namespace TareasMVC.Controllers
             }
 
             return tarea;
-
         }
 
         [HttpPost]
@@ -112,14 +111,14 @@ namespace TareasMVC.Controllers
             var usuarioId = servicioUsuarios.ObtenerUsuarioId();
 
             var tarea = await context.Tareas.FirstOrDefaultAsync(t => t.Id == id &&
-            t.UsuarioCreacionId == usuarioId);
+                t.UsuarioCreacionId == usuarioId);
 
             if (tarea is null)
             {
                 return NotFound();
             }
 
-            context.Remove(tarea);
+            tarea.FechaEliminacion = DateTime.UtcNow;
             await context.SaveChangesAsync();
             return Ok();
         }
