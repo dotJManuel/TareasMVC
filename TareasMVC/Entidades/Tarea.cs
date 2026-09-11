@@ -14,6 +14,10 @@ namespace TareasMVC.Entidades
         public int Orden { get; set; }
         public DateTime FechaCreacion { get; set; }
         public string UsuarioCreacionId { get; set; }
+        public DateTime? FechaEliminacion { get; set; }
+        public int? TareaPadreId { get; set; }
+        public Tarea TareaPadre { get; set; }
+        public List<Tarea> Subtareas { get; set; }
         public IdentityUser UsuarioCreacion { get; set; }
         public List<Paso> Pasos { get; set; }
         public List<ArchivoAdjunto> ArchivosAdjuntos { get; set; }

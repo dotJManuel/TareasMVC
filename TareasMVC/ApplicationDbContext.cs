@@ -14,7 +14,13 @@ namespace TareasMVC
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<Tarea>().Property(t => t.Titulo).HasMaxLength(250).IsRequired();
+            modelBuilder.Entity<Tarea>().HasQueryFilter(t => t.FechaEliminacion == null);
+
+            modelBuilder.Entity<Tarea>()
+                .HasMany(t => t.Subtareas)
+                .WithOne(t => t.TareaPadre)
+                .HasForeignKey(t => t.TareaPadreId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
         public DbSet<Tarea> Tareas { get; set; }
