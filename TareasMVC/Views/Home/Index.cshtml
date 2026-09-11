@@ -5,30 +5,36 @@
     ViewData["Title"] = "Listado tareas";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@localizer["Mis tareas"]</h1>
-    <button type="button" class="btn btn-primary mb-3" onclick="agregarNuevaTareaAlListado()">
+<div class="page-header">
+    <div>
+        <h1>@localizer["Mis tareas"]</h1>
+        <p class="page-subtitle">@localizer["Organiza, ordena y da seguimiento a tus pendientes"]</p>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="agregarNuevaTareaAlListado()">
+        <i class="bi bi-plus-lg"></i>
         @localizer["Agregar nueva tarea"]
     </button>
 </div>
 
-<div id="contenedor-listado-tareas" class="text-center">
-    <div id="reordenable" class="text-start" data-bind="foreach: tareas">
-        <div name="tarea" class="border mb-2 p-2" style="cursor: pointer"
+<div id="contenedor-listado-tareas">
+    <div id="reordenable" class="tareas-lista text-start" data-bind="foreach: tareas">
+        <div name="tarea" style="cursor: pointer"
              data-bind="click: manejarClickTarea">
-            <div data-bind="text: titulo, hidden: esNuevo" class="fw-bold">
+            <div data-bind="text: titulo, hidden: esNuevo" class="tarea-titulo">
             </div>
 
             <div name="pasos-resumen" data-bind="visible: pasosTotal() > 0">
-                <span data-bind="text: pasosRealizados">
-                </span>/<span data-bind="text: pasosTotal">
-                </span>
-                <span data-bind="text: porcentajeCompletado">
-
+                <div class="progreso-track">
+                    <div class="progreso-fill"
+                         data-bind="style: { width: (pasosTotal() > 0 ? Math.round(pasosRealizados() / pasosTotal() * 100) : 0) + '%' }"></div>
+                </div>
+                <span>
+                    <span data-bind="text: pasosRealizados"></span>/<span data-bind="text: pasosTotal"></span>
+                    <span data-bind="text: porcentajeCompletado"></span>
                 </span>
             </div>
 
-            <input type="text" name="titulo-tarea" autocomplete="off"
+            <input type="text" name="titulo-tarea" autocomplete="off" class="form-control"
                    data-bind="value: titulo, visible: esNuevo,
                     attr: {'data-id': id},
                     event: {focusout: manejarFocusoutTituloTarea}" />
@@ -36,11 +42,14 @@
         </div>
     </div>
 
-    <div data-bind="visible: cargando" class="spinner-border">
-        <span class="visually-hidden">Cargando...</span>
+    <div data-bind="visible: cargando" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
     </div>
 
-    <div data-bind="visible: noHayTareas">
+    <div data-bind="visible: noHayTareas" class="tareas-vacio">
+        <i class="bi bi-clipboard-check"></i>
         No existen tareas para mostrar
     </div>
 

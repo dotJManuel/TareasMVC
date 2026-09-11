@@ -9,9 +9,9 @@
 }
 
 <form asp-controller="Home" asp-action="CambiarIdioma"
-      asp-route-urlRetorno="@urlRetorno" method="post" class="form-horizontal"
-      role="form" style="display: inline">
-    <label>@localizer["Idioma:"]</label>
+      asp-route-urlRetorno="@urlRetorno" method="post" class="lang-switch"
+      role="form">
+    <label><i class="bi bi-translate"></i> @localizer["Idioma:"]</label>
     <select name="cultura" asp-for="@requestCulture.RequestCulture.UICulture.Name"
             id="cultura" onchange="this.form.submit()"
             asp-items="Constantes.CulturasUISoportadas">

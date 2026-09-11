@@ -1,7 +1,9 @@
-﻿<label><i class="bi bi-check-square"></i> Pasos de la tarea</label>
-<button class="btn btn-secondary btn-sm" onclick="manejarClickAgregarPaso()">
-    <i class="bi bi-plus"></i>
-</button>
+﻿<div class="editor-seccion-head">
+    <label class="editor-label"><i class="bi bi-check2-square"></i> Pasos de la tarea</label>
+    <button class="btn btn-secondary btn-sm" onclick="manejarClickAgregarPaso()">
+        <i class="bi bi-plus-lg"></i>
+    </button>
+</div>
 
 <div id="reordenable-pasos" data-bind="foreach: pasos">
     <div class="mt-2">
@@ -22,14 +24,14 @@
                           placeholder="Agregue una descripción"
                           data-bind="{value: descripcion, visible: modoEdicion}"></textarea>
 
-                <div class="mt-2" data-bind="{visible: modoEdicion}">
-                    <button class="btn btn-primary" data-bind="{click: manejarClickSalvarPaso}">
+                <div class="mt-2 d-flex gap-2" data-bind="{visible: modoEdicion}">
+                    <button class="btn btn-primary btn-sm" data-bind="{click: manejarClickSalvarPaso}">
                         Salvar
                     </button>
-                    <button class="btn btn-secondary" data-bind="{click: manejarClickCancelarPaso}">
+                    <button class="btn btn-secondary btn-sm" data-bind="{click: manejarClickCancelarPaso}">
                         Cancelar
                     </button>
-                    <button class="btn btn-danger" data-bind="{hidden: esNuevo, 
+                    <button class="btn btn-danger btn-sm" data-bind="{hidden: esNuevo,
                             click: manejarClickBorrarPaso}">
                         Borrar
                     </button>

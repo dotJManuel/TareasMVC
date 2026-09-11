@@ -15,15 +15,15 @@
                                    data-bind="value: titulo, event: {change: manejarCambioEditarTarea}" />
                             <label for="txtTituloCrearTarea">Título de la tarea</label>
                         </div>
-                        <div class="mb-3">
-                            <label>Descripción</label>
+                        <div class="mb-4">
+                            <label class="form-label">Descripción</label>
                             <textarea type="text" class="form-control" rows="4"
                                       data-bind="value: descripcion,
                                         event: {change: manejarCambioEditarTarea}">
 
                             </textarea>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <partial name="_Pasos" />
                         </div>
                         <div class="mb-3">
@@ -32,8 +32,8 @@
                     </div>
                     <div class="col-lg-3">
                         <button data-bind="{click: intentarBorrarTarea}"
-                                class="btn btn-secondary mb-2 w-100 text-start">
-                            <i class="bi bi-x-lg"></i>
+                                class="btn btn-secondary w-100 text-start btn-block" style="justify-content: flex-start">
+                            <i class="bi bi-trash3"></i>
                             Borrar tarea
                         </button>
                     </div>

@@ -5,7 +5,12 @@
     Layout = "../shared/_layout";
 }
 
-<h1>Listado de usuarios</h1>
+<div class="page-header">
+    <div>
+        <h1>Listado de usuarios</h1>
+        <p class="page-subtitle">Gestiona los roles de administrador de la plataforma</p>
+    </div>
+</div>
 
 @if (Model.Mensaje is not null)
 {
@@ -18,40 +23,45 @@
 {
 
     <form method="post">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <td>Acción</td>
-                    <td>Email</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var usuario in Model.Usuarios)
-                {
+        <div class="tabla-card">
+            <table class="table table-hover mb-0">
+                <thead>
                     <tr>
-                        <td>
-                            <button class="btn btn-primary me-2"
-                            asp-action="HacerAdmin"
-                            asp-route-email="@usuario.Email">
-                                Hacer Admin
-                            </button>
-                            <button class="btn btn-secondary me-2"
-                            asp-action="RemoverAdmin"
-                            asp-route-email="@usuario.Email">
-                                Remover Admin
-                            </button>
-                        </td>
-                        <td>
-                            @usuario.Email
-                        </td>
+                        <td>Email</td>
+                        <td class="text-end">Acción</td>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var usuario in Model.Usuarios)
+                    {
+                        <tr>
+                            <td class="fw-semibold">
+                                @usuario.Email
+                            </td>
+                            <td class="text-end">
+                                <button class="btn btn-primary btn-sm me-2"
+                                asp-action="HacerAdmin"
+                                asp-route-email="@usuario.Email">
+                                    <i class="bi bi-shield-check"></i> Hacer Admin
+                                </button>
+                                <button class="btn btn-secondary btn-sm"
+                                asp-action="RemoverAdmin"
+                                asp-route-email="@usuario.Email">
+                                    <i class="bi bi-shield-slash"></i> Remover Admin
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </form>
 
 }
 else
 {
-    <p>No hay usuarios para mostrar</p>
+    <div class="tareas-vacio">
+        <i class="bi bi-people"></i>
+        No hay usuarios para mostrar
+    </div>
 }

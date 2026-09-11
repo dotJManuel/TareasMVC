@@ -1,10 +1,12 @@
-﻿<label><i class="bi bi-paperclip"></i> Archivos adjuntos</label>
-<button class="btn btn-secondary btn-sm" onclick="manejarClickAgregarArchivoAdjunto()"><i class="bi bi-plus"></i></button>
+﻿<div class="editor-seccion-head">
+    <label class="editor-label"><i class="bi bi-paperclip"></i> Archivos adjuntos</label>
+    <button class="btn btn-secondary btn-sm" onclick="manejarClickAgregarArchivoAdjunto()"><i class="bi bi-plus-lg"></i></button>
+</div>
 <input type="file"
        onchange="manejarSeleccionArchivoTarea(event)"
        id="archivoATarea" multiple style="display: none" />
 
-<div id="reordenable-adjuntos" data-bind="foreach: archivosAdjuntos">
+<div id="reordenable-adjuntos" data-bind="foreach: archivosAdjuntos" class="d-flex flex-column gap-2">
     <div>
         <div style="cursor: pointer" class="fw-bold" data-bind="text: titulo,
                 hidden: modoEdicion, click: manejarClickTituloArchivoAdjunto"></div>
@@ -14,13 +16,14 @@
                    data-bind="value: titulo, attr:{'data-id': id}" />
         </div>
 
-        <div>
-            Agregado <span data-bind="text: publicado"></span> -
-            <span class="fw-bold" style="cursor: pointer"
-                  data-bind="click: manejarClickBorrarArchivoAdjunto">Borrar</span> -
-            <span class="fw-bold"
-                  data-bind="click: manejarClickDescargarArchivoAdjunto"
-                  style="cursor: pointer">Descargar</span>
+        <div class="adjunto-meta">
+            <i class="bi bi-clock"></i> Agregado <span data-bind="text: publicado"></span>
+            <span class="mx-1">·</span>
+            <span class="accion"
+                  data-bind="click: manejarClickDescargarArchivoAdjunto"><i class="bi bi-download"></i> Descargar</span>
+            <span class="mx-1">·</span>
+            <span class="accion"
+                  data-bind="click: manejarClickBorrarArchivoAdjunto"><i class="bi bi-trash3"></i> Borrar</span>
         </div>
     </div>
 </div>
